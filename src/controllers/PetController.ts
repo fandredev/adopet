@@ -1,11 +1,19 @@
 import { Request, Response } from 'express';
 import type { Pet } from '../types/Pet';
+import { invalidBreed } from '../utils/invalid-breed';
 
 let listOfPets: Pet[] = [];
 
 export default class PetController {
   createPet(req: Request, response: Response) {
     const pet = req.body as Pet;
+    const validBreed = invalidBreed(pet.breed);
+
+    if (!validBreed) {
+      return response.status(400).json({
+        error: `Raça inválida. Use 'dog' ou 'cat' para raça.`,
+      });
+    }
 
     const newPet: Pet = {
       ...pet,

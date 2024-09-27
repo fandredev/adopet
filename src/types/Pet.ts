@@ -1,7 +1,9 @@
+import { Breed } from './Breed';
+
 export type Pet = {
   id: number;
   name: string;
   age: number;
-  breed: string;
+  breed: Breed;
   adopted: boolean;
 };
