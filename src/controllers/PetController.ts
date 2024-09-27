@@ -2,7 +2,15 @@ import { Request, Response } from 'express';
 import type { Pet } from '../types/Pet';
 import { invalidBreed } from '../utils/invalid-breed';
 
+import { StatusCodes } from 'http-status-codes';
+
 let listOfPets: Pet[] = [];
+let id = 0;
+
+function generateId() {
+  id += 1;
+  return id;
+}
 
 export default class PetController {
   createPet(req: Request, response: Response) {
@@ -10,38 +18,41 @@ export default class PetController {
     const validBreed = invalidBreed(pet.breed);
 
     if (!validBreed) {
-      return response.status(400).json({
+      return response.status(StatusCodes.BAD_REQUEST).json({
         error: `Raça inválida. Use 'dog' ou 'cat' para raça.`,
       });
     }
 
     const newPet: Pet = {
+      id: generateId(),
       ...pet,
     };
 
     listOfPets.push(newPet);
 
-    return response.status(201).json(newPet);
+    return response.status(StatusCodes.CREATED).json(newPet);
   }
 
-  listPets(req: Request, res: Response) {
-    return res.status(200).json(listOfPets);
+  listPets(_: Request, res: Response) {
+    return res.status(StatusCodes.OK).json(listOfPets);
   }
 
   updatePet(req: Request, res: Response) {
     const { id } = req.params;
-    const { adopted, name, age, breed } = req.body as Pet;
+    const { adopted, name, dateNasc, breed } = req.body as Pet;
     const pet = listOfPets.find((pet) => pet.id === +id);
 
     if (!pet) {
-      return res.status(404).json({ error: 'Pet não encontrado' });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: 'Pet não encontrado' });
     }
 
     pet.name = name;
-    pet.age = age;
+    pet.dateNasc = dateNasc;
     pet.breed = breed;
     pet.adopted = adopted;
-    return res.status(200).json(pet);
+    return res.status(StatusCodes.OK).json(pet);
   }
 
   removePet(req: Request, res: Response) {
@@ -49,11 +60,15 @@ export default class PetController {
 
     const pet = listOfPets.find((pet) => pet.id === Number(id));
     if (!pet) {
-      return res.status(404).json({ erro: 'Pet não encontrado' });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ erro: 'Pet não encontrado' });
     }
     const index = listOfPets.indexOf(pet);
     listOfPets.splice(index, 1);
 
-    return res.status(200).json({ mensagem: 'Pet deletado com sucesso' });
+    return res
+      .status(StatusCodes.OK)
+      .json({ mensagem: 'Pet deletado com sucesso' });
   }
 }
