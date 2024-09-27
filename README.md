@@ -7,6 +7,8 @@
 ### Other tools:
 
 - [Eslint](https://prettier.io/)
+- [HTTP status codes](https://www.npmjs.com/package/http-status-codes)
+- [Check updates](https://www.npmjs.com/package/npm-check-updates)
 
 ## Clone this repo
 
