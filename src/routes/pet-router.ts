@@ -5,6 +5,9 @@ const router = express.Router();
 
 const petController = new PetController();
 
-router.post('/', petController.createPet.bind(petController));
+router.post('/create', petController.createPet.bind(petController));
+router.get('/list', petController.listPets.bind(petController));
+router.put('/update/:id', petController.updatePet.bind(petController));
+router.delete('/remove/:id', petController.removePet.bind(petController));
 
 export default router;
