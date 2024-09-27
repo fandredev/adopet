@@ -3,7 +3,7 @@ import { Breed } from './Breed';
 export type Pet = {
   id: number;
   name: string;
-  age: number;
+  dateNasc: Date;
   breed: Breed;
   adopted: boolean;
 };
