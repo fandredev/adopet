@@ -4,6 +4,9 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "noEmitOnError": true,
+
+    "removeComments": true,
+    "outDir": "./dist",
   },
   "include": ["./src/**/*", "./server.ts"]
 }
