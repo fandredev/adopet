@@ -15,9 +15,13 @@ export default class AdopterEntity implements Adopter {
   @Column()
   phone: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   photo: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   address: string;
 }

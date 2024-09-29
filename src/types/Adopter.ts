@@ -3,6 +3,6 @@ export default interface Adopter {
   name: string;
   password: string;
   phone: string;
-  photo: string;
-  address: string;
+  photo?: string;
+  address?: string;
 }
