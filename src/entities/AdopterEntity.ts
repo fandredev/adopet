@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import Adopter from '../types/Adopter';
+import AddressEntity from './AddressEntity';
 
 @Entity()
 export default class AdopterEntity implements Adopter {
@@ -20,8 +27,11 @@ export default class AdopterEntity implements Adopter {
   })
   photo: string;
 
-  @Column({
+  @OneToOne(() => AddressEntity, {
     nullable: true,
+    cascade: true,
+    eager: true,
   })
-  address: string;
+  @JoinColumn() // Field that will be used to join the tables
+  address: AddressEntity;
 }
