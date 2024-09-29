@@ -1,7 +1,7 @@
 import { Breed } from './Breed';
 
 export type Pet = {
-  id: number;
+  id?: number;
   name: string;
   dateNasc: Date;
   breed: Breed;
