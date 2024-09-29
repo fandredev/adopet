@@ -24,7 +24,7 @@ export default class PetRepository implements InterfacePetRepository {
       });
 
       if (!findPet) {
-        throw new Error('Pet not found');
+        throw new Error('Pet não encontrado.');
       }
 
       const newPet = { ...findPet, ...pet };
@@ -43,7 +43,7 @@ export default class PetRepository implements InterfacePetRepository {
       });
 
       if (!findPet) {
-        throw new Error('Pet not found');
+        throw new Error('Pet não encontrado.');
       }
 
       return this._repository.delete(id);
