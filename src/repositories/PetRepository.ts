@@ -4,7 +4,6 @@ import InterfacePetRepository from './interface/IPetRepository';
 
 export default class PetRepository implements InterfacePetRepository {
   private _repository: Repository<PetEntity>;
-  private _pets: PetEntity[] = [];
 
   constructor(protected repository: Repository<PetEntity>) {
     this._repository = repository;

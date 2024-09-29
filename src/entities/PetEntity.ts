@@ -5,7 +5,7 @@ import { Breed } from '../types/Breed';
 @Entity() // This class is an entity to be stored in the database
 export default class PetEntity implements Pet {
   @PrimaryGeneratedColumn() // Generate a unique id
-  id: number;
+  id!: number;
 
   @Column() // Create a column in the database
   name: string;
