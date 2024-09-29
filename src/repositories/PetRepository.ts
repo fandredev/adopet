@@ -10,12 +10,12 @@ export default class PetRepository implements InterfacePetRepository {
     this._repository = repository;
   }
 
-  async create(pet: PetEntity): Promise<void> {
+  async create(pet: PetEntity) {
     await this._repository.save(pet);
   }
 
-  read(): PetEntity[] {
-    return this._pets;
+  async read(): Promise<PetEntity[]> {
+    return await this.repository.find();
   }
 
   update(id: number, pet: PetEntity): void {
