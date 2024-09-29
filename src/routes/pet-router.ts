@@ -1,9 +1,15 @@
 import express from 'express';
 import PetController from '../controllers/PetController';
+import PetRepository from '../repositories/PetRepository';
+
+import { appDataSource } from '../config/data-source';
 
 const router = express.Router();
 
-const petController = new PetController();
+const petRepository = new PetRepository(
+  appDataSource.getRepository('PetEntity')
+);
+const petController = new PetController(petRepository);
 
 router.post('/create', petController.createPet.bind(petController));
 router.get('/list', petController.listPets.bind(petController));

@@ -3,6 +3,8 @@ import type { Pet } from '../types/Pet';
 import { invalidBreed } from '../utils/invalid-breed';
 
 import { StatusCodes } from 'http-status-codes';
+import PetRepository from '../repositories/PetRepository';
+import PetEntity from '../entities/PetEntity';
 
 let listOfPets: Pet[] = [];
 let id = 0;
@@ -13,8 +15,10 @@ function generateId() {
 }
 
 export default class PetController {
+  constructor(private repository: PetRepository) {}
+
   createPet(req: Request, response: Response) {
-    const pet = req.body as Pet;
+    const pet = req.body as PetEntity;
     const validBreed = invalidBreed(pet.breed);
 
     if (!validBreed) {
@@ -23,14 +27,16 @@ export default class PetController {
       });
     }
 
-    const newPet: Pet = {
-      id: generateId(),
-      ...pet,
-    };
+    const petEntity = new PetEntity();
+    petEntity.id = generateId();
+    petEntity.name = pet.name;
+    petEntity.dateNasc = pet.dateNasc;
+    petEntity.breed = pet.breed;
+    petEntity.adopted = false;
 
-    listOfPets.push(newPet);
+    this.repository.create(petEntity);
 
-    return response.status(StatusCodes.CREATED).json(newPet);
+    return response.status(StatusCodes.CREATED).json(petEntity);
   }
 
   listPets(_: Request, res: Response) {
