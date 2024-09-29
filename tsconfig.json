@@ -7,6 +7,9 @@
 
     "removeComments": true,
     "outDir": "./dist",
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": ["./src/**/*", "./server.ts"]
 }
