@@ -2,13 +2,14 @@
 
 # Stack used
 
-<img src="https://skillicons.dev/icons?i=typescript,express,yarn,postman,git&theme=dark" alt="typescript,express,yarn,postman,git" />
+<img src="https://skillicons.dev/icons?i=typescript,express,yarn,git,sqlite&theme=dark" alt="typescript,express,yarn,git,sqlite" />
 
 ### Other tools:
 
 - [Eslint](https://prettier.io/)
 - [HTTP status codes](https://www.npmjs.com/package/http-status-codes)
 - [Check updates](https://www.npmjs.com/package/npm-check-updates)
+- [TypeORM](https://typeorm.io/)
 
 ## Clone this repo
 
