@@ -8,7 +8,7 @@ import PetEntity from '../entities/PetEntity';
 export default class PetController {
   constructor(private repository: PetRepository) {}
 
-  createPet(req: Request, response: Response) {
+  create(req: Request, response: Response) {
     const pet = req.body as PetEntity;
     const validBreed = invalidBreed(pet.breed);
 
@@ -29,13 +29,13 @@ export default class PetController {
     return response.status(StatusCodes.CREATED).json(petEntity);
   }
 
-  async listPets(_: Request, res: Response) {
+  async read(_: Request, res: Response) {
     const listPets = await this.repository.read();
 
     return res.status(StatusCodes.OK).json(listPets);
   }
 
-  async updatePet(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     await this.repository.update(+req.params.id, req.body);
 
     return res.status(StatusCodes.OK).json({
@@ -43,7 +43,7 @@ export default class PetController {
     });
   }
 
-  async removePet(req: Request, res: Response) {
+  async remove(req: Request, res: Response) {
     await this.repository.delete(+req.params.id);
 
     return res.status(StatusCodes.OK).json({
