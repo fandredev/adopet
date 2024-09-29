@@ -10,6 +10,8 @@
 - [HTTP status codes](https://www.npmjs.com/package/http-status-codes)
 - [Check updates](https://www.npmjs.com/package/npm-check-updates)
 - [TypeORM](https://typeorm.io/)
+- [asdf](https://asdf-vm.com/)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 ## Clone this repo
 
