@@ -26,7 +26,7 @@ export default class AdopterController {
         adopter,
       });
     } catch (error) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: 'Erro ao criar adotador',
         error,
       });
@@ -37,5 +37,44 @@ export default class AdopterController {
     const listAdopters = await this.repository.read();
 
     return res.status(StatusCodes.OK).json(listAdopters);
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const adopter = req.body as AdopterEntity;
+      const id = +req.params.id;
+
+      await this.repository.update(id, adopter);
+
+      return res.status(StatusCodes.OK).json({
+        message: 'Adotador atualizado com sucesso',
+        adopter,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          message: 'Erro ao atualizar adotador',
+          error: error.message,
+        });
+      }
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    try {
+      const id = +req.params.id;
+
+      await this.repository.delete(id);
+
+      return res.status(StatusCodes.OK).json({
+        message: 'Adotador deletado com sucesso',
+        id,
+      });
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: 'Erro ao deletar adotador',
+        error,
+      });
+    }
   }
 }

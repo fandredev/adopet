@@ -13,5 +13,7 @@ const adopterController = new AdopterController(adopterRepository);
 
 router.post('/create', adopterController.create.bind(adopterController));
 router.get('/read', adopterController.read.bind(adopterController));
+router.put('/update/:id', adopterController.update.bind(adopterController));
+router.delete('/delete/:id', adopterController.delete.bind(adopterController));
 
 export default router;
