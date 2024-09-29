@@ -1,18 +1,9 @@
 import { Request, Response } from 'express';
-import type { Pet } from '../types/Pet';
 import { invalidBreed } from '../utils/invalid-breed';
 
 import { StatusCodes } from 'http-status-codes';
 import PetRepository from '../repositories/PetRepository';
 import PetEntity from '../entities/PetEntity';
-
-let listOfPets: Pet[] = [];
-let id = 0;
-
-function generateId() {
-  id += 1;
-  return id;
-}
 
 export default class PetController {
   constructor(private repository: PetRepository) {}
@@ -28,7 +19,6 @@ export default class PetController {
     }
 
     const petEntity = new PetEntity();
-    petEntity.id = generateId();
     petEntity.name = pet.name;
     petEntity.dateNasc = pet.dateNasc;
     petEntity.breed = pet.breed;
@@ -45,38 +35,19 @@ export default class PetController {
     return res.status(StatusCodes.OK).json(listPets);
   }
 
-  updatePet(req: Request, res: Response) {
-    const { id } = req.params;
-    const { adopted, name, dateNasc, breed } = req.body as Pet;
-    const pet = listOfPets.find((pet) => pet.id === +id);
+  async updatePet(req: Request, res: Response) {
+    await this.repository.update(+req.params.id, req.body);
 
-    if (!pet) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: 'Pet não encontrado' });
-    }
-
-    pet.name = name;
-    pet.dateNasc = dateNasc;
-    pet.breed = breed;
-    pet.adopted = adopted;
-    return res.status(StatusCodes.OK).json(pet);
+    return res.status(StatusCodes.OK).json({
+      message: 'Pet atualizado com sucesso',
+    });
   }
 
-  removePet(req: Request, res: Response) {
-    const { id } = req.params;
+  async removePet(req: Request, res: Response) {
+    await this.repository.delete(+req.params.id);
 
-    const pet = listOfPets.find((pet) => pet.id === Number(id));
-    if (!pet) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ erro: 'Pet não encontrado' });
-    }
-    const index = listOfPets.indexOf(pet);
-    listOfPets.splice(index, 1);
-
-    return res
-      .status(StatusCodes.OK)
-      .json({ mensagem: 'Pet deletado com sucesso' });
+    return res.status(StatusCodes.OK).json({
+      message: 'Pet removido com sucesso',
+    });
   }
 }

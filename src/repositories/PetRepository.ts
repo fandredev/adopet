@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import PetEntity from '../entities/PetEntity';
 import InterfacePetRepository from './interface/IPetRepository';
 
@@ -18,13 +18,40 @@ export default class PetRepository implements InterfacePetRepository {
     return await this.repository.find();
   }
 
-  update(id: number, pet: PetEntity): void {
-    this._pets[id] = pet;
+  async update(id: number, pet: PetEntity): Promise<UpdateResult> {
+    try {
+      const findPet = await this._repository.findOne({
+        where: { id },
+      });
+
+      if (!findPet) {
+        throw new Error('Pet not found');
+      }
+
+      const newPet = { ...findPet, ...pet };
+      return this._repository.update(id, newPet);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 
-  delete(id: number): void {
-    const numberOfPetsToBeDeleted = 1;
+  async delete(id: number): Promise<DeleteResult> {
+    try {
+      const findPet = await this._repository.findOne({
+        where: { id },
+      });
 
-    this._pets.splice(id, numberOfPetsToBeDeleted);
+      if (!findPet) {
+        throw new Error('Pet not found');
+      }
+
+      return this._repository.delete(id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 }
