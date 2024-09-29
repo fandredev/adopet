@@ -12,5 +12,6 @@ const adopterRepository = new AdopterRepository(
 const adopterController = new AdopterController(adopterRepository);
 
 router.post('/create', adopterController.create.bind(adopterController));
+router.get('/read', adopterController.read.bind(adopterController));
 
 export default router;

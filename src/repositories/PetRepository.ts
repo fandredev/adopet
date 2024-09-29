@@ -14,7 +14,7 @@ export default class PetRepository implements InterfacePetRepository {
   }
 
   async read(): Promise<PetEntity[]> {
-    return await this.repository.find();
+    return await this._repository.find();
   }
 
   async update(id: number, pet: PetEntity): Promise<UpdateResult> {

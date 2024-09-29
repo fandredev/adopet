@@ -1,5 +1,6 @@
 import AdopterEntity from '../../entities/AdopterEntity';
 
 export default interface IAdopterRepository {
-  create(adopter: AdopterEntity): Promise<AdopterEntity>;
+  create(adopter: AdopterEntity): void;
+  read(): Promise<AdopterEntity[]>;
 }

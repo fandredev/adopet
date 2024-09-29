@@ -32,4 +32,10 @@ export default class AdopterController {
       });
     }
   }
+
+  async read(_: Request, res: Response) {
+    const listAdopters = await this.repository.read();
+
+    return res.status(StatusCodes.OK).json(listAdopters);
+  }
 }

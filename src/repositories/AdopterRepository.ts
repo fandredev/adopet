@@ -3,9 +3,17 @@ import IAdopterRepository from './interface/IAdopterRepository';
 import AdopterEntity from '../entities/AdopterEntity';
 
 export default class AdopterRepository implements IAdopterRepository {
-  constructor(private repository: Repository<AdopterEntity>) {}
+  private _repository: Repository<AdopterEntity>;
 
-  async create(adopter: AdopterEntity): Promise<AdopterEntity> {
-    return this.repository.create(adopter);
+  constructor(protected repository: Repository<AdopterEntity>) {
+    this._repository = repository;
+  }
+
+  async create(adopter: AdopterEntity) {
+    await this._repository.save(adopter);
+  }
+
+  async read(): Promise<AdopterEntity[]> {
+    return await this._repository.find();
   }
 }
