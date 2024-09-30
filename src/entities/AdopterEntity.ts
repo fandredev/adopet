@@ -4,9 +4,11 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import Adopter from '../types/Adopter';
 import AddressEntity from './AddressEntity';
+import PetEntity from './PetEntity';
 
 @Entity()
 export default class AdopterEntity implements Adopter {
@@ -34,4 +36,7 @@ export default class AdopterEntity implements Adopter {
   })
   @JoinColumn() // Field that will be used to join the tables
   address: AddressEntity;
+
+  @OneToMany(() => PetEntity, (pet) => pet.adopted)
+  pets: PetEntity[];
 }

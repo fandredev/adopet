@@ -1,4 +1,5 @@
 import AddressEntity from '../entities/AddressEntity';
+import PetEntity from '../entities/PetEntity';
 
 export default interface Adopter {
   id: number;
@@ -7,4 +8,5 @@ export default interface Adopter {
   phone: string;
   photo?: string;
   address?: AddressEntity;
+  pets: PetEntity[];
 }

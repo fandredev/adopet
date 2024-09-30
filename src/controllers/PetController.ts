@@ -50,4 +50,20 @@ export default class PetController {
       message: 'Pet removido com sucesso',
     });
   }
+
+  async adoptPet(req: Request, res: Response) {
+    try {
+      const { petId, adopterId } = req.body;
+
+      await this.repository.adoptPet(petId, adopterId);
+
+      return res.status(StatusCodes.OK).json({
+        message: 'Pet adotado com sucesso',
+      });
+    } catch (error) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: error.message,
+      });
+    }
+  }
 }

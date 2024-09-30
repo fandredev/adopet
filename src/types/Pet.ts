@@ -1,3 +1,4 @@
+import AdopterEntity from '../entities/AdopterEntity';
 import { Breed } from './Breed';
 
 export type Pet = {
@@ -6,4 +7,5 @@ export type Pet = {
   dateNasc: Date;
   breed: Breed;
   adopted: boolean;
+  adopter?: AdopterEntity;
 };
