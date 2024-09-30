@@ -1,5 +1,5 @@
 import { HeightAnimal } from '../types/Breed';
 
-export function invalidPetHeightAnimal(petAnimalHeight: HeightAnimal): boolean {
-  return petAnimalHeight in HeightAnimal;
+export function invalidPetHeightAnimal(height: HeightAnimal): boolean {
+  return height in HeightAnimal;
 }

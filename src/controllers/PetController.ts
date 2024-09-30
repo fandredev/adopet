@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import PetRepository from '../repositories/PetRepository';
 import PetEntity from '../entities/PetEntity';
 import { invalidPetHeightAnimal } from '../utils/invalid-height-animal';
+import { HeightAnimal } from '../types/Breed';
 
 export default class PetController {
   constructor(private repository: PetRepository) {}
@@ -12,9 +13,7 @@ export default class PetController {
   create(req: Request, response: Response) {
     const pet = req.body as PetEntity;
     const validBreed = invalidBreed(pet.breed);
-    const validHeightAnimal = invalidPetHeightAnimal(
-      pet.heightAnimal && pet.heightAnimal
-    );
+    const validHeightAnimal = invalidPetHeightAnimal(pet.height && pet.height);
 
     if (!validBreed) {
       return response.status(StatusCodes.BAD_REQUEST).json({
@@ -30,7 +29,7 @@ export default class PetController {
 
     const petEntity = new PetEntity();
     petEntity.name = pet.name;
-    petEntity.heightAnimal = pet.heightAnimal;
+    petEntity.height = pet.height;
     petEntity.dateNasc = pet.dateNasc;
     petEntity.breed = pet.breed;
     petEntity.adopted = false;
@@ -76,5 +75,15 @@ export default class PetController {
         error: error.message,
       });
     }
+  }
+
+  async findPetsByHeight(req: Request, res: Response) {
+    const { height } = req.query;
+
+    const listPets = await this.repository.findPetsByHeight(
+      height as HeightAnimal
+    );
+
+    return res.status(StatusCodes.OK).json(listPets);
   }
 }

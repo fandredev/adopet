@@ -2,6 +2,7 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import PetEntity from '../entities/PetEntity';
 import InterfacePetRepository from './interface/IPetRepository';
 import AdopterEntity from '../entities/AdopterEntity';
+import { HeightAnimal } from '../types/Breed';
 
 export default class PetRepository implements InterfacePetRepository {
   private _petRepository: Repository<PetEntity>;
@@ -82,6 +83,26 @@ export default class PetRepository implements InterfacePetRepository {
       findPet.adopter = findAdopter;
 
       return this._petRepository.save(findPet);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  }
+
+  async findPetsByHeight(height: HeightAnimal): Promise<PetEntity[]> {
+    try {
+      const findPets = await this._petRepository.find({
+        where: { height },
+      });
+
+      console.log(findPets);
+
+      if (!findPets) {
+        throw new Error('Pets não encontrados.');
+      }
+
+      return findPets;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

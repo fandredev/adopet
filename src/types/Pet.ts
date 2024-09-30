@@ -6,7 +6,7 @@ export type Pet = {
   name: string;
   dateNasc: Date;
   breed: Breed;
-  heightAnimal?: HeightAnimal;
+  height?: HeightAnimal;
   adopted: boolean;
   adopter?: AdopterEntity;
 };

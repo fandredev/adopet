@@ -22,4 +22,9 @@ router.put(
   petController.adoptPet.bind(petController)
 );
 
+router.get(
+  '/findPetsByHeight',
+  petController.findPetsByHeight.bind(petController)
+);
+
 export default router;

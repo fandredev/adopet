@@ -14,7 +14,7 @@ export default class PetEntity implements Pet {
   @Column({
     nullable: true,
   })
-  heightAnimal!: HeightAnimal;
+  height!: HeightAnimal;
 
   @Column()
   dateNasc: Date;
