@@ -23,8 +23,8 @@ router.put(
 );
 
 router.get(
-  '/findPetsByHeight',
-  petController.findPetsByHeight.bind(petController)
+  '/findByAnything',
+  petController.findPetByAnything.bind(petController)
 );
 
 export default router;

@@ -8,7 +8,7 @@ import AddressEntity from '../entities/AddressEntity';
 export default class AdopterController {
   constructor(private repository: AdopterRepository) {}
 
-  create(req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     try {
       const adopter = req.body as AdopterEntity;
 
@@ -24,7 +24,7 @@ export default class AdopterController {
       adopterEntity.photo = adopter.photo;
       adopterEntity.address = addressEntity;
 
-      this.repository.create(adopterEntity);
+      await this.repository.create(adopterEntity);
 
       return res.status(StatusCodes.CREATED).json({
         message: 'Adotador criado com sucesso',

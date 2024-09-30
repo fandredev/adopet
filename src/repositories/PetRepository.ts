@@ -2,7 +2,6 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import PetEntity from '../entities/PetEntity';
 import InterfacePetRepository from './interface/IPetRepository';
 import AdopterEntity from '../entities/AdopterEntity';
-import { HeightAnimal } from '../types/Breed';
 
 export default class PetRepository implements InterfacePetRepository {
   private _petRepository: Repository<PetEntity>;
@@ -90,19 +89,20 @@ export default class PetRepository implements InterfacePetRepository {
     }
   }
 
-  async findPetsByHeight(height: HeightAnimal): Promise<PetEntity[]> {
+  async findPetByAnything<T extends keyof PetEntity>(
+    field: T,
+    value: PetEntity[T]
+  ): Promise<PetEntity> {
     try {
-      const findPets = await this._petRepository.find({
-        where: { height },
+      const pets = await this._petRepository.findOne({
+        where: { [field]: value },
       });
 
-      console.log(findPets);
-
-      if (!findPets) {
-        throw new Error('Pets não encontrados.');
+      if (!pets) {
+        throw new Error('Pet não encontrado.');
       }
 
-      return findPets;
+      return pets;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -1,6 +1,5 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 import PetEntity from '../../entities/PetEntity';
-import { HeightAnimal } from '../../types/Breed';
 
 export default interface InterfacePetRepository {
   create(pet: PetEntity): Promise<void>;
@@ -10,5 +9,8 @@ export default interface InterfacePetRepository {
 
   adoptPet(petId: number, adopterId: number): Promise<PetEntity> | void;
 
-  findPetsByHeight(height: HeightAnimal): Promise<PetEntity[]> | PetEntity[];
+  findPetByAnything<T extends keyof PetEntity>(
+    field: T,
+    value: PetEntity[T]
+  ): Promise<PetEntity> | PetEntity[];
 }

@@ -5,12 +5,11 @@ import { StatusCodes } from 'http-status-codes';
 import PetRepository from '../repositories/PetRepository';
 import PetEntity from '../entities/PetEntity';
 import { invalidPetHeightAnimal } from '../utils/invalid-height-animal';
-import { HeightAnimal } from '../types/Breed';
 
 export default class PetController {
   constructor(private repository: PetRepository) {}
 
-  create(req: Request, response: Response) {
+  async create(req: Request, response: Response) {
     const pet = req.body as PetEntity;
     const validBreed = invalidBreed(pet.breed);
     const validHeightAnimal = invalidPetHeightAnimal(pet.height && pet.height);
@@ -34,7 +33,7 @@ export default class PetController {
     petEntity.breed = pet.breed;
     petEntity.adopted = false;
 
-    this.repository.create(petEntity);
+    await this.repository.create(petEntity);
 
     return response.status(StatusCodes.CREATED).json(petEntity);
   }
@@ -77,11 +76,12 @@ export default class PetController {
     }
   }
 
-  async findPetsByHeight(req: Request, res: Response) {
-    const { height } = req.query;
+  async findPetByAnything(req: Request, res: Response) {
+    const { field, value } = req.query;
 
-    const listPets = await this.repository.findPetsByHeight(
-      height as HeightAnimal
+    const listPets = await this.repository.findPetByAnything(
+      field as keyof PetEntity,
+      value as string
     );
 
     return res.status(StatusCodes.OK).json(listPets);
