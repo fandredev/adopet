@@ -2,7 +2,7 @@
 
 # Stack used
 
-<img src="https://skillicons.dev/icons?i=typescript,express,yarn,git,sqlite&theme=dark" alt="typescript,express,yarn,git,sqlite" />
+<img src="https://skillicons.dev/icons?i=nodejs,typescript,express,yarn,git,sqlite&theme=dark" alt="nodejs,typescript,express,yarn,git,sqlite" />
 
 ### Other tools:
 
