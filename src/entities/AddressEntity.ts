@@ -11,4 +11,9 @@ export default class AddressEntity implements Address {
 
   @Column()
   uf: string;
+
+  constructor(city: string, uf: string) {
+    this.city = city;
+    this.uf = uf;
+  }
 }
