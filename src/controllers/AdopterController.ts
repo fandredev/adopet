@@ -4,13 +4,18 @@ import AdopterRepository from '../repositories/AdopterRepository';
 import { StatusCodes } from 'http-status-codes';
 import AdopterEntity from '../entities/AdopterEntity';
 import AddressEntity from '../entities/AddressEntity';
-import { RequestBodyAdopter, ResponseBodyAdopter } from '../types/Adopter';
+import {
+  PickAdopterFields,
+  RequestBodyAdopter,
+  RequestParamsAdopter,
+  ResponseBodyAdopter,
+} from '../types/Adopter';
 
 export default class AdopterController {
   constructor(private repository: AdopterRepository) {}
 
   async create(
-    req: Request<object, object, RequestBodyAdopter>,
+    req: Request<object, object, ResponseBodyAdopter>,
     res: Response<ResponseBodyAdopter>
   ) {
     try {
@@ -40,19 +45,48 @@ export default class AdopterController {
     } catch (error) {
       if (error instanceof Error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: error.message || 'Algum erro inesperado aconteceu',
+          error:
+            error.message ||
+            'Error ao criar um contato. Por favor, contate o suporte para resolvermos ou tente novamente mais tarde.',
         });
       }
     }
   }
 
-  async read(_: Request, res: Response) {
-    const listAdopters = await this.repository.read();
+  async read(
+    req: Request<object, object, RequestBodyAdopter>,
+    res: Response<ResponseBodyAdopter>
+  ) {
+    try {
+      const adopters = await this.repository.read();
+      const adoptersData: PickAdopterFields[] = adopters.map((adopter) => {
+        return {
+          id: adopter.id,
+          name: adopter.name,
+          phone: adopter.phone,
+        };
+      });
 
-    return res.status(StatusCodes.OK).json(listAdopters);
+      return res.status(StatusCodes.OK).json({
+        message:
+          adoptersData.length === 0
+            ? 'Sem adotadores no momento'
+            : 'Adotadores encontrados',
+        data: adoptersData,
+      });
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error:
+          error.message ||
+          'Erro ao buscar adotadores. Por favor, contate o suporte para resolvermos ou tente novamente mais tarde.',
+      });
+    }
   }
 
-  async update(req: Request, res: Response) {
+  async update(
+    req: Request<RequestParamsAdopter, object, RequestBodyAdopter>,
+    res: Response<ResponseBodyAdopter>
+  ) {
     try {
       const adopter = req.body as AdopterEntity;
       const id = +req.params.id;
@@ -61,56 +95,53 @@ export default class AdopterController {
 
       return res.status(StatusCodes.OK).json({
         message: 'Adotador atualizado com sucesso',
-        adopter,
       });
     } catch (error) {
-      if (error instanceof Error) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          message: 'Erro ao atualizar adotador',
-          error: error.message,
-        });
-      }
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error:
+          error.message ||
+          'Erro ao atualizar adotador. Por favor, contate o suporte para resolvermos ou tente novamente mais tarde.',
+      });
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(
+    req: Request<RequestParamsAdopter, object, RequestBodyAdopter>,
+    res: Response<ResponseBodyAdopter>
+  ) {
     try {
       const id = +req.params.id;
 
       await this.repository.delete(id);
 
-      return res.status(StatusCodes.OK).json({
-        message: 'Adotador deletado com sucesso',
-        id,
-      });
+      return res.sendStatus(StatusCodes.NO_CONTENT);
     } catch (error) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: 'Erro ao deletar adotador',
-        error,
+        error:
+          error.message ||
+          'Erro ao deletar adotador. Por favor, contate o suporte para resolvermos ou tente novamente mais tarde.',
       });
     }
   }
 
-  async updateAddressAdopter(req: Request, res: Response) {
+  async updateAddressAdopter(
+    req: Request<RequestParamsAdopter, object, RequestBodyAdopter>,
+    res: Response<ResponseBodyAdopter>
+  ) {
     try {
-      const address = req.body as AddressEntity;
+      const address = req.body.address as AddressEntity;
       const id = +req.params.id;
 
-      const response = await this.repository.updateAddressAdopter(id, address);
-
-      if (!response.success) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: response.message,
-        });
-      }
+      await this.repository.updateAddressAdopter(id, address);
 
       return res.status(StatusCodes.OK).json({
-        message: response.message,
+        message: 'Endereço do adotador atualizado com sucesso',
       });
     } catch (error) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: 'Erro ao atualizar endereço do adotador',
-        error,
+        error:
+          error.message ||
+          'Erro ao atualizar endereço do adotador. Por favor, contate o suporte para resolvermos ou tente novamente mais tarde.',
       });
     }
   }

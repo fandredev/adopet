@@ -55,29 +55,26 @@ export default class AdopterRepository implements IAdopterRepository {
     }
   }
 
-  async updateAddressAdopter(
-    idAdopter: number,
-    address: AddressEntity
-  ): Promise<{ success: boolean; message?: string }> {
+  async updateAddressAdopter(idAdopter: number, address: AddressEntity) {
     try {
       const findAdopter = await this._repository.findOne({
         where: { id: idAdopter },
+        relations: ['address'],
       });
 
       if (!findAdopter) {
         throw new Error('Adotador não encontrado.');
       }
 
-      const newAddress = new AddressEntity(address.city, address.uf);
-      findAdopter.address = newAddress;
-
-      await this._repository.save(findAdopter);
-
-      return { success: true, message: 'Endereço atualizado com sucesso.' };
-    } catch (error) {
-      if (error instanceof Error) {
-        return { success: false, message: error.message };
+      if (!findAdopter.address) {
+        findAdopter.address = new AddressEntity(address.city, address.uf);
+      } else {
+        findAdopter.address.city = address.city;
+        findAdopter.address.uf = address.uf;
       }
+      return await this._repository.save(findAdopter);
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 }

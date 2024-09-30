@@ -11,10 +11,19 @@ export default interface Adopter {
   pets: PetEntity[];
 }
 
+type PickAdopterFields = Pick<Adopter, 'id' | 'name' | 'phone'>;
+
 type RequestBodyAdopter = Omit<Adopter, 'id'>;
+type RequestParamsAdopter = { id?: string };
 type ResponseBodyAdopter = {
-  data?: Pick<Adopter, 'id' | 'name' | 'phone'>;
-  error?: string;
+  data?: PickAdopterFields[] | PickAdopterFields;
+  message?: string;
+  error?: unknown;
 };
 
-export { RequestBodyAdopter, ResponseBodyAdopter };
+export {
+  PickAdopterFields,
+  RequestBodyAdopter,
+  RequestParamsAdopter,
+  ResponseBodyAdopter,
+};

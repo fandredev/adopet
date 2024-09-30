@@ -11,5 +11,5 @@ export default interface IAdopterRepository {
   updateAddressAdopter(
     idAdopter: number,
     address: AddressEntity
-  ): Promise<{ success: boolean; message?: string }>;
+  ): Promise<AdopterEntity>;
 }
