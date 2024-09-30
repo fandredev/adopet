@@ -4,6 +4,7 @@ import { invalidBreed } from '../utils/invalid-breed';
 import { StatusCodes } from 'http-status-codes';
 import PetRepository from '../repositories/PetRepository';
 import PetEntity from '../entities/PetEntity';
+import { invalidPetHeightAnimal } from '../utils/invalid-height-animal';
 
 export default class PetController {
   constructor(private repository: PetRepository) {}
@@ -11,15 +12,25 @@ export default class PetController {
   create(req: Request, response: Response) {
     const pet = req.body as PetEntity;
     const validBreed = invalidBreed(pet.breed);
+    const validHeightAnimal = invalidPetHeightAnimal(
+      pet.heightAnimal && pet.heightAnimal
+    );
 
     if (!validBreed) {
       return response.status(StatusCodes.BAD_REQUEST).json({
-        error: `Raça inválida. Use 'dog' ou 'cat' para raça.`,
+        error: `Raça inválida. Use 'cachorro' ou 'gato' para raça.`,
+      });
+    }
+
+    if (!validHeightAnimal) {
+      return response.status(StatusCodes.BAD_REQUEST).json({
+        error: `Altura inválida. Use 'pequeno', 'medio' ou 'grande' para altura do animal.`,
       });
     }
 
     const petEntity = new PetEntity();
     petEntity.name = pet.name;
+    petEntity.heightAnimal = pet.heightAnimal;
     petEntity.dateNasc = pet.dateNasc;
     petEntity.breed = pet.breed;
     petEntity.adopted = false;

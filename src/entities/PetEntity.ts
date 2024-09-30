@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Pet } from '../types/Pet';
-import { Breed } from '../types/Breed';
+import { Breed, HeightAnimal } from '../types/Breed';
 import AdopterEntity from './AdopterEntity';
 
 @Entity() // This class is an entity to be stored in the database
@@ -10,6 +10,11 @@ export default class PetEntity implements Pet {
 
   @Column() // Create a column in the database
   name: string;
+
+  @Column({
+    nullable: true,
+  })
+  heightAnimal!: HeightAnimal;
 
   @Column()
   dateNasc: Date;
