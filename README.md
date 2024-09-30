@@ -1,4 +1,5 @@
 ## Adopet: :technologist:
+![image](https://github.com/user-attachments/assets/81730d8e-2beb-42e6-b8a1-7544cb99bb84)
 
 # Stack used
 
