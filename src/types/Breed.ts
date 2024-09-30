@@ -1,4 +1,9 @@
 export enum Breed {
-  Dog = 'dog',
-  Cat = 'cat',
+  Dog = 'cachorro',
+  Cat = 'gato',
+}
+export enum HeightAnimal {
+  pequeno = 'pequeno',
+  medio = 'medio',
+  grande = 'grande',
 }
