@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "a0f2b5df-489f-49a4-8e1f-c910daf02db9",
+		"name": "Adopet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7059246"
+	},
+	"item": [
+		{
+			"name": "Pet",
+			"item": [
+				{
+					"name": "Add new pet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"TOM\",\n    \"breed\":\"cachorro\",\n    \"adopted\": false,\n    \"dateNasc\":\"2024-09-27T23:20:53.564Z\",\n    \"height\":\"grande\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pets/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List pets",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\":\"Bolt\",\n    \"specie\":\"Cachorro\",\n    \"age\": 3,\n    \"adotado\": false,\n    \"cpf\": 111\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pets/read",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by field",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\":\"Bolt\",\n    \"specie\":\"Cachorro\",\n    \"age\": 3,\n    \"adotado\": false,\n    \"cpf\": 111\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pets/findByAnything?field=name&value=Cat",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"findByAnything"
+							],
+							"query": [
+								{
+									"key": "field",
+									"value": "name"
+								},
+								{
+									"key": "value",
+									"value": "Cat"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove pet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 3,\n    \"name\":\"Felipe\",\n    \"specie\":\"Cachorro\",\n    \"age\": 3,\n    \"adotado\": false,\n    \"cpf\": 111\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pets/remove/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"remove",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Felipe\",\n    \"breed\":\"dog\",\n    \"adopted\": false,\n    \"dateNasc\":\"2024-09-27T23:20:53.564Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/pets/update/6",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"update",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adopt Pet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/pets/adopt/{{PET_ID}}/{{ADOPTER_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"pets",
+								"adopt",
+								"{{PET_ID}}",
+								"{{ADOPTER_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adopter",
+			"item": [
+				{
+					"name": "Create adopter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Felipe André\",\n    \"password\": \"xxxxx\",\n    \"phone\":\"(53) 3634-6771\",\n    \"photo\":\"https://randomuser.me/api/portraits/men/21.jpg\",\n    \"address\": {\n        \"city\": \"São Paulo\",\n        \"uf\":\"SP\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/adopters/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"adopters",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List adopters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Felipe André\",\n    \"password\": \"xxxxx\",\n    \"phone\":\"(53) 3634-6771\",\n    \"photo\":\"https://randomuser.me/api/portraits/men/21.jpg\",\n    \"address\": \"Rua Sete, 441, São Gonçalo, Petrolina\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/adopters/read",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"adopters",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update adopter",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Júlia\",\n    \"password\": \"xxxxx\",\n    \"phone\":\"(53) 3634-6771\",\n    \"photo\":\"https://randomuser.me/api/portraits/men/21.jpg\",\n    \"address\": \"Rua Sete, 441, São Gonçalo, Petrolina\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/adopters/update/2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"adopters",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update address",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"city\":\"Minas Gerais\",\n    \"uf\":\"MG\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/adopters/update/address/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"adopters",
+								"update",
+								"address",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Adopter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/adopters/delete/5",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"adopters",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

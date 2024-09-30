@@ -1,4 +1,5 @@
 ## Adopet: :technologist:
+
 ![image](https://github.com/user-attachments/assets/81730d8e-2beb-42e6-b8a1-7544cb99bb84)
 
 # Stack used
@@ -13,6 +14,7 @@
 - [TypeORM](https://typeorm.io/)
 - [asdf](https://asdf-vm.com/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Postman](https://www.postman.com/)
 
 ## Clone this repo
 
@@ -39,6 +41,8 @@ git clone git@github.com:fandredev/adopet.git
 ```
  yarn run server
 ```
+
+##### Notes: check the "Adopet.postman_collection.json" to use the collection from routes in Postman.
 
 ## :mailbox_with_no_mail: Contatos
 
