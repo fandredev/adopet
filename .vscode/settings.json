@@ -1,0 +1,27 @@
+{
+  "typescript.suggestionActions.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": true,
+  "editor.fontSize": 15,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "typescript.suggest.autoImports": true,
+  "editor.suggestSelection": "first",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // Prettier
+  "prettier.singleQuote": true,
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "eslint.run": "onSave"
+}
