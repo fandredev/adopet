@@ -4,11 +4,15 @@ import AdopterRepository from '../repositories/AdopterRepository';
 import { StatusCodes } from 'http-status-codes';
 import AdopterEntity from '../entities/AdopterEntity';
 import AddressEntity from '../entities/AddressEntity';
+import { RequestBodyAdopter, ResponseBodyAdopter } from '../types/Adopter';
 
 export default class AdopterController {
   constructor(private repository: AdopterRepository) {}
 
-  async create(req: Request, res: Response) {
+  async create(
+    req: Request<object, object, RequestBodyAdopter>,
+    res: Response<ResponseBodyAdopter>
+  ) {
     try {
       const adopter = req.body as AdopterEntity;
 
@@ -27,14 +31,18 @@ export default class AdopterController {
       await this.repository.create(adopterEntity);
 
       return res.status(StatusCodes.CREATED).json({
-        message: 'Adotador criado com sucesso',
-        adopter,
+        data: {
+          id: adopterEntity.id,
+          name: adopterEntity.name,
+          phone: adopterEntity.phone,
+        },
       });
     } catch (error) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: 'Erro ao criar adotador',
-        error,
-      });
+      if (error instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: error.message || 'Algum erro inesperado aconteceu',
+        });
+      }
     }
   }
 

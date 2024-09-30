@@ -10,3 +10,11 @@ export default interface Adopter {
   address?: AddressEntity;
   pets: PetEntity[];
 }
+
+type RequestBodyAdopter = Omit<Adopter, 'id'>;
+type ResponseBodyAdopter = {
+  data?: Pick<Adopter, 'id' | 'name' | 'phone'>;
+  error?: string;
+};
+
+export { RequestBodyAdopter, ResponseBodyAdopter };
